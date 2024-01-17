@@ -1,0 +1,49 @@
+package org.example;
+
+import java.util.*;
+
+/**
+ * Задание
+ *
+ * Реализуйте структуру телефонной книги с помощью HashMap.
+ * Программа также должна учитывать, что во входной структуре будут повторяющиеся имена
+ * с разными телефонами, их необходимо считать,
+ * как одного человека с разными телефонами. Вывод должен быть отсортирован по убыванию числа телефонов.
+ */
+
+public class PhoneBook {
+
+        //Добавление элементов коллекции
+    public static void add(HashMap<String, List<String>> phoneBook, String name, String phone) {
+        List<String> phones = phoneBook.getOrDefault(name, new ArrayList<>());
+        phones.add(phone);
+        phoneBook.put(name, phones);
+    }
+
+    public static void sortPhoneBook(HashMap<String, List<String>> phoneBook) {
+        // Преобразование HashMap в отсортированный список
+        List<Map.Entry<String, List<String>>> sortedList = new ArrayList<>(phoneBook.entrySet());
+        sortedList.sort((a, b) -> Integer.compare(b.getValue().size(), a.getValue().size()));
+        // Вывод телефонной книги
+        for (Map.Entry<String, List<String>> entry : sortedList) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+    }
+
+    public static void main(String[] args) {
+        HashMap<String, List<String>> phoneBook = new HashMap<>();
+
+        // Добавление контактов в телефонную книгу
+
+        add(phoneBook, "Иванов", "+7920-255-45-55");
+        add(phoneBook, "Петров", "+7928-555-78-63");
+        add(phoneBook, "Сидоров", "+7952-325-22-55");
+        add(phoneBook, "Иванов", "+7122-586-55-11");
+        add(phoneBook, "Петров", "+7984-565-55-71");
+        add(phoneBook, "Петров", "+7984-545-55-61");
+
+        // Вывод телефонной книги
+        sortPhoneBook(phoneBook);
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    }
+}
